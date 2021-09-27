@@ -108,7 +108,7 @@
 }
 .message {
   display: grid;
-  grid-template-columns: 1fr 60px;
+  grid-template-columns: 1fr 5rem;
   grid-template-rows: auto;
   flex-direction: row;
   height: auto;
@@ -117,7 +117,7 @@
   background-color: transparent;
 }
 .message button {
-  background-color: var(--background-2);
+  background-color: var(--background-1);
   border: none;
   outline: none;
   width: 100%;
