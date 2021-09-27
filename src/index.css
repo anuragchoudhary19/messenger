@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  font-family: 'Georama', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --background-1: #6930c3;
+  --background-2: #252525;
+  --primary: white;
+  --text-primary: hsl(0, 0%, 100%);
+  --btn-primary: #252525;
+  --btn-outline: #6930c3;
+  --btn-primary-hover: hsla(0, 0%, 15%, 0.9);
+  --card-hover-color: hsla(0, 0%, 100%, 0.2);
+
+  --backdrop-color: hsla(240, 100%, 60%, 0.1);
+  --success-color: hsl(120, 100%, 40%);
+  --success-hover-color: hsl(120, 100%, 50%);
+  --hover-color: hsl(203, 90%, 8%);
+  --danger-color: hsl(0, 100%, 40%);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}

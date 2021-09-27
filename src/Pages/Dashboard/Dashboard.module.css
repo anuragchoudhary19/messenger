@@ -1,0 +1,23 @@
+.home {
+  display: grid;
+  grid-template-columns: 27% 1fr;
+  grid-template-rows: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+}
+.home header {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 100%;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-2);
+}
+.main {
+  display: flex;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+}
