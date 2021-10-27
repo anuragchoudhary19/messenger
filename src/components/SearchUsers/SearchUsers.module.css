@@ -1,6 +1,7 @@
 .modal {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background-color: var(--background-2);
   color: white;
   width: 40%;

@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Dropdown from '../Dropdown/Dropdown';
 import Modal from '../Modal/Modal';
 import Options from '../Options/Options';
+import ProfileImage from '../../images/profile.jfif';
 
 import styles from './SearchCard.module.css';
 
@@ -37,7 +38,9 @@ const Card = (props) => {
         return;
       } else if (card.current?.contains(e.target)) {
         setOpen(false);
+        return;
       }
+      setOpen(false);
     },
     [open]
   );
@@ -47,7 +50,6 @@ const Card = (props) => {
   }, [handleClick]);
 
   const handleRedirect = (id) => {
-    console.log(id);
     history.push(`/${id}`);
     close();
   };
@@ -59,7 +61,7 @@ const Card = (props) => {
     <div className={styles.card} ref={card}>
       <div className={styles.user} onClick={() => handleRedirect(user.id)}>
         <div className={styles.avatar}>
-          <img src={user?.photo} alt='profile' />
+          <img src={user?.photo || ProfileImage} alt='profile' />
         </div>
         <div className={styles.header}>
           <span className={styles.name}>{`${user.firstname} ${user.lastname}`}</span>

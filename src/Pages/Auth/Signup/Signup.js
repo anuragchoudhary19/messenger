@@ -84,7 +84,7 @@ const Signup = () => {
   return (
     <div className={styles.signup}>
       <div className={styles.logo}>
-        <h1 style={{ fontSize: '5rem' }}>Messenger</h1>
+        <h1>Messenger</h1>
       </div>
       <div className={styles.form}>
         <form onSubmit={handleSignup}>
