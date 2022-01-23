@@ -30,7 +30,7 @@ const Signup = () => {
 
   const checkForm = () => {
     if (firstname.trim() === '') {
-      setFormErrors((prev) => ({ ...prev, email: 'First name is required' }));
+      setFormErrors((prev) => ({ ...prev, firstname: 'First name is required' }));
       return true;
     }
     if (email.trim() === '') {
