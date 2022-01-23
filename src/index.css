@@ -10,20 +10,23 @@ body {
   box-sizing: border-box;
 }
 :root {
-  --background-1: #6930c3;
-  --background-2: #252525;
-  --primary: white;
-  --text-primary: hsl(0, 0%, 100%);
-  --btn-primary: #252525;
+  --green0: #3fa796;
+  --green10: #399687;
+  --green20: #328678;
+  --green30: #2c7569;
+  --green40: #26645a;
+  --green50: #20544b;
+  --white: hsl(0, 0%, 95%);
+  --btn-primary: #26645a;
   --btn-outline: #6930c3;
-  --btn-primary-hover: hsla(0, 0%, 15%, 0.9);
+  --btn-primary-hover: #20544b;
   --card-hover-color: hsla(0, 0%, 100%, 0.2);
 
   --backdrop-color: hsla(240, 100%, 60%, 0.1);
   --success-color: hsl(120, 100%, 40%);
   --success-hover-color: hsl(120, 100%, 50%);
   --hover-color: hsl(203, 90%, 8%);
-  --danger-color: hsl(0, 100%, 40%);
+  --danger-color: blue;
 }
 
 code {
