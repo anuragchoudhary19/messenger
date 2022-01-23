@@ -7,56 +7,7 @@
   height: 100vh;
   width: 100%;
   overflow: hidden;
-  @media (max-width: 768px) {
-    width: 100%;
-    flex-direction: column;
-  }
-}
-.form {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  height: 100%;
-  width: 50%;
-  z-index: 5;
-  background-color: var(--background-1);
-  form {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100%;
-    width: 60%;
-    z-index: 5;
-    h1 {
-      font-size: 3rem;
-      color: var(--text-primary);
-    }
-  }
-  @media (min-width: 768px) {
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: -10%;
-      bottom: 0;
-      width: 20%;
-      transform: skewX(-11deg);
-      background-color: var(--background-1);
-      z-index: -1;
-    }
-  }
-  @media (max-width: 768px) {
-    form {
-      width: 90%;
-    }
-    width: 100%;
-    align-items: center;
-  }
+  background-color: var(--green0);
 }
 .logo {
   display: flex;
@@ -65,42 +16,69 @@
   width: 50%;
   height: 100%;
   padding: 0.5rem;
-  background-color: var(--background-2);
-  @media (max-width: 768px) {
-    width: 100%;
-    height: 4rem;
-  }
   h1 {
-    font-size: 5rem;
-    color: var(--text-primary);
-    @media (max-width: 768px) {
-      font-size: 3rem;
+    font-size: clamp(4rem, 5vw, 6rem);
+    color: var(--white);
+  }
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 50%;
+  z-index: 5;
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: fit-content;
+    width: 60%;
+    h1 {
+      font-size: clamp(3rem, 2vw, 4rem);
+      color: var(--white);
     }
   }
 }
 
 .error {
   width: 100%;
+  height: fit-content;
   text-align: left;
-  display: inline-flex;
-  align-items: center;
-  height: 2.5rem;
   border-radius: 0.25rem;
   padding: 0.5rem;
-  font-size: 1.2rem;
-  color: hsl(0, 100%, 45%);
-  background-color: hsl(0, 100%, 80%);
+  font-size: clamp(1rem, 1vw, 1.1rem);
+  color: #9b0000;
+  background-color: #ff9999;
 }
 
 .login {
   margin: 0 0 0 auto;
-  padding: 0.5rem 0 0 0;
+  padding: 0.5rem;
   font-weight: bold;
   a {
     text-decoration: none;
-    color: var(--text-primary);
+    color: var(--white);
     &:hover {
       text-decoration: underline;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .signup {
+    flex-direction: column;
+  }
+  .logo {
+    width: 100%;
+    height: fit-content;
+    margin-top: 3vw;
+  }
+  .form {
+    width: 100%;
+    form {
+      width: 90%;
     }
   }
 }
