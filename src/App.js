@@ -5,7 +5,7 @@ import LoadingPage from './components/LoadingPage/LoadingPage';
 const Login = lazy(() => import('./Pages/Auth/Login/Login'));
 const Signup = lazy(() => import('./Pages/Auth/Signup/Signup'));
 const AuthProvider = lazy(() => import('./AuthProvider'));
-const Dashboard = lazy(() => import('./Pages/Dashboard/Dashboard'));
+const Home = lazy(() => import('./Pages/Home/Home'));
 const Chat = lazy(() => import('./Pages/Chat/Chat'));
 const PrivateRoute = lazy(() => import('./Routes/PrivateRoute'));
 
@@ -23,7 +23,7 @@ function App() {
             <Route exact path='/' component={Login} />
             <Route path='/login' component={Login} />
             <Route path='/signup' component={Signup} />
-            <PrivateRoute exact path='/dashboard' component={Dashboard} />
+            <PrivateRoute exact path='/home' component={Home} />
             <PrivateRoute exact path='/:id' component={Chat} />
           </Switch>
         </div>

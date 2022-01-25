@@ -15,18 +15,16 @@ const Button = (props) => {
   const checkBtnStyle = STYLES.includes(btnStyle) ? btnStyle : STYLES[0];
 
   return (
-    <div
-      className={`${styles.btn} ${disabled ? styles.disabled : styles[checkBtnStyle]} 
-       `}
-      style={{ width: width + '%' }}
+    <button
+      className={`${disabled ? styles.disabled : styles[checkBtnStyle]} ${
+        loading ? `${styles.loading} ${styles.btn}` : styles.btn
+      }`}
+      style={{ width: width }}
+      disabled={disabled ? disabled : false}
+      type={type ? type : 'button'}
       onClick={onClick}>
-      <button
-        className={`${loading ? styles.loading : styles.active}`}
-        disabled={disabled ? disabled : false}
-        type={type}>
-        {children}
-      </button>
-    </div>
+      {children}
+    </button>
   );
 };
 

@@ -18,7 +18,11 @@ const Chat = () => {
         <Sidebar user={user} />
       </header>
       <div className={styles.main}>
-        <ChatBox user={currentUser} recipient={id} conversationId={conversationId} />
+        {id && conversationId ? (
+          <ChatBox user={currentUser} recipient={id} conversationId={conversationId} />
+        ) : (
+          <div className={styles.logo}>Messenger</div>
+        )}
       </div>
     </div>
   );

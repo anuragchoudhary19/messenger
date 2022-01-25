@@ -23,7 +23,7 @@ const Login = () => {
   useEffect(() => {
     let isMounted = true;
     if (isMounted && currentUser) {
-      history.push('/dashboard');
+      history.push('/home');
     }
     return () => {
       isMounted = false;
@@ -110,11 +110,12 @@ const Login = () => {
             onChange={handleInput}
             placeholder='Password'
           />
-          <Button width='100' btnStyle='primarySolid' btnSize='md' loading={loading} disabled={loading} type='submit'>
+          <Button width='100%' btnStyle='primarySolid' btnSize='md' loading={loading} disabled={loading} type='submit'>
             Log In
           </Button>
+          <br />
           <Button
-            width='100'
+            width='100%'
             btnStyle='primarySolid'
             btnSize='md'
             loading={demoLoading}
