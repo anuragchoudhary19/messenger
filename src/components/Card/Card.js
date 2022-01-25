@@ -15,6 +15,7 @@ import date from 'date-and-time';
 import styles from './Card.module.css';
 
 const Card = (props) => {
+  const online = true;
   const { chat } = props;
   const { id, firstname, lastname, photo, conversationId } = chat;
   const [latestMessage, setLatestmessage] = useState('');
@@ -91,9 +92,15 @@ const Card = (props) => {
           <img src={photo || ProfileImage} alt='profile' />
         </div>
         <div className={styles.header}>
-          <span className={styles.name}>{firstname + ' ' + lastname}</span>
-          {latestMessage && <div className={styles.message}>{latestMessage}</div>}
-          {latestMessageTime && <span className={styles.date}>{checkTime(latestMessageTime * 1000)}</span>}
+          <div className={styles.name}>
+            {firstname && <span>{firstname}</span>}
+            {lastname && <span>{lastname}</span>}
+            {online && <span className={styles.online}></span>}
+          </div>
+          <div className={styles.lastMessage}>
+            {latestMessage && <span className={styles.message}>{latestMessage}</span>}
+            {latestMessageTime && <span className={styles.date}>{checkTime(latestMessageTime * 1000)}</span>}
+          </div>
         </div>
       </Link>
       <div className={styles.dropdown} ref={dropdown} onClick={() => setOpenDropdown(true)}>

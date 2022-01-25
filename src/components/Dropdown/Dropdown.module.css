@@ -18,7 +18,7 @@
   border-radius: 0.25rem;
   overflow: hidden;
   color: var(--text-primary);
-  background-color: var(--btn-primary);
+  background-color: var(--graylight);
   transition: height 0.2s linear;
   box-shadow: 0px 0px 2px 0 #ccc;
 }
@@ -35,5 +35,5 @@
   cursor: pointer;
 }
 .menu *:hover {
-  background-color: var(--btn-primary-hover);
+  background-color: var(--card-hover-color);
 }

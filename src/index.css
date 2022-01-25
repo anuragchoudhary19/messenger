@@ -17,12 +17,14 @@ body {
   --green40: #26645a;
   --green50: #20544b;
   --gray0: #2c2e43;
+  --gray50: #161722;
   --graylight: #ababb4;
+  --graylighter: hsla(240, 5%, 84%, 0.5);
   --white: hsl(0, 0%, 95%);
   --btn-primary: #26645a;
   --btn-outline: #26645a;
   --btn-primary-hover: #20544b;
-  --card-hover-color: hsla(0, 0%, 100%, 0.2);
+  --card-hover-color: hsla(240, 5%, 84%, 0.1);
 
   --backdrop-color: hsla(240, 100%, 60%, 0.1);
   --success-color: hsl(120, 100%, 40%);
