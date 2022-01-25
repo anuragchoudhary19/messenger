@@ -129,7 +129,7 @@ const Signup = () => {
             value={confirmPassword}
             onChange={handleInput}
           />
-          <Button width='100' btnStyle='primarySolid' btnSize='md' loading={loading} disabled={loading} type='submit'>
+          <Button width='100%' btnStyle='primarySolid' btnSize='md' loading={loading} disabled={loading} type='submit'>
             Sign Up
           </Button>
           <span className={styles.login}>
