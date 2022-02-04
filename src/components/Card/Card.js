@@ -1,48 +1,41 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { database } from '../../firebase';
 //
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProfileImage from '../../images/profile.jfif';
 //
 import Dropdown from '../Dropdown/Dropdown';
-import Modal from '../Modal/Modal';
+import DropdownModal from '../DropdownModal/DropdownModal';
 import Options from '../Options/Options';
-
 //
 import date from 'date-and-time';
 import styles from './Card.module.css';
+import { useGetUser } from '../../customHooks/useGetUser';
+import { useGetOnlineStatus } from '../../customHooks/useGetOnlineStatus';
+import { useGetLastMessage } from '../../customHooks/useGetLastMessage';
+import { useDeleteChat } from '../../customHooks/useDeleteChat';
 
 const Card = (props) => {
-  const online = true;
-  const { chat } = props;
-  const { id, firstname, lastname, photo, conversationId } = chat;
-  const [latestMessage, setLatestmessage] = useState('');
-  const [latestMessageTime, setLatestmessageTime] = useState('');
-  const [screen, setScreen] = useState(window.screen.width);
+  const { query, chat } = props;
+  const [[recipientId, chatId]] = Object.entries(chat);
+  const { user } = useGetUser(recipientId);
+  const { id, firstname, lastname, photo } = user;
+  const isOnline = useGetOnlineStatus(id);
+  const { lastMessage } = useGetLastMessage(chatId);
+  const [matchesQuery, setMatchesQuery] = useState(false);
   const [openDropdown, setOpenDropdown] = useState('');
+  const { deleteChat } = useDeleteChat(chatId, id);
   const dropdown = useRef();
   const card = useRef();
   const popupNode = useRef();
+  console.log(chatId);
   useEffect(() => {
-    database.chats.doc(conversationId).onSnapshot((doc) => {
-      let data = doc.data();
-      let len = data.messages.length;
-      if (len > 0) {
-        setLatestmessage(data.messages[len - 1].message.text);
-        setLatestmessageTime(data.messages[len - 1].createdAt.seconds);
-      }
-    });
-    return () => {
-      setLatestmessage('');
-      setLatestmessageTime('');
-    };
-  }, [conversationId]);
-  useEffect(() => {
-    window.addEventListener('resize', () => setScreen(window.screen.width));
-    return () => window.removeEventListener('resize', () => setScreen());
-  }, []);
+    let regex = new RegExp('^' + query, 'g', 'i');
+    if (regex.test(firstname) || regex.test(lastname)) {
+      setMatchesQuery(true);
+    }
+  }, [firstname, lastname, query]);
 
   const handleClick = useCallback((e) => {
     if (dropdown.current?.contains(e.target)) {
@@ -56,18 +49,6 @@ const Card = (props) => {
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, [handleClick]);
-
-  const deleteHandle = (id) => {
-    //  import('../../functions/tweet').then(({ removeTweet }) => {
-    //    removeTweet(id, user.token)
-    //      .then(() => {
-    //        //
-    //      })
-    //      .catch((err) => {
-    //        console.log(err);
-    //      });
-    //  });
-  };
 
   const checkTime = (time) => {
     const currentDate = new Date();
@@ -86,42 +67,43 @@ const Card = (props) => {
     }
   };
   return (
-    <div className={styles.card} ref={card}>
-      <Link className={styles.link} to={`/${id}`}>
-        <div className={styles.avatar}>
-          <img src={photo || ProfileImage} alt='profile' />
-        </div>
-        <div className={styles.header}>
-          <div className={styles.name}>
-            {firstname && <span>{firstname}</span>}
-            {lastname && <span>{lastname}</span>}
-            {online && <span className={styles.online}></span>}
+    (query === '' || matchesQuery) && (
+      <div className={styles.card} ref={card} id={chatId}>
+        <Link className={styles.link} to={`/${id}`}>
+          <div className={styles.avatar}>
+            <img src={photo || ProfileImage} alt='profile' />
           </div>
-          <div className={styles.lastMessage}>
-            {latestMessage && <span className={styles.message}>{latestMessage}</span>}
-            {latestMessageTime && <span className={styles.date}>{checkTime(latestMessageTime * 1000)}</span>}
+          <div className={styles.header}>
+            <div className={styles.name}>
+              {firstname && <span>{firstname}</span>}
+              {lastname && <span>{lastname}</span>}
+              {isOnline && <span className={styles.online}></span>}
+            </div>
+            <div className={styles.lastMessage}>
+              {lastMessage.message && <span className={styles.message}>{lastMessage.message.text}</span>}
+              {lastMessage.createdAt && (
+                <span className={styles.date}>{checkTime(lastMessage.createdAt.seconds * 1000)}</span>
+              )}
+            </div>
           </div>
-        </div>
-      </Link>
-      <div className={styles.dropdown} ref={dropdown} onClick={() => setOpenDropdown(true)}>
-        <div>
-          <FontAwesomeIcon icon={faEllipsisH} />
-        </div>
-        {screen > 768 ? (
+        </Link>
+        <div className={styles.dropdown} ref={dropdown} onClick={() => setOpenDropdown(true)}>
+          <div>
+            <FontAwesomeIcon icon={faEllipsisH} />
+          </div>
           <Dropdown open={openDropdown}>
-            <div onClick={() => deleteHandle(id)}>Delete</div>
+            <div onClick={deleteChat}>Delete</div>
           </Dropdown>
-        ) : (
-          <Modal isOpen={openDropdown === id}>
+          <DropdownModal isOpen={openDropdown}>
             <Options>
-              <div onClick={() => deleteHandle(id)} ref={popupNode}>
+              <div onClick={deleteChat} ref={popupNode}>
                 Delete
               </div>
             </Options>
-          </Modal>
-        )}
+          </DropdownModal>
+        </div>
       </div>
-    </div>
+    )
   );
 };
 

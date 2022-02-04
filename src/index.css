@@ -25,12 +25,11 @@ body {
   --btn-outline: #26645a;
   --btn-primary-hover: #20544b;
   --card-hover-color: hsla(240, 5%, 84%, 0.1);
-
   --backdrop-color: hsla(240, 100%, 60%, 0.1);
   --success-color: hsl(120, 100%, 40%);
   --success-hover-color: hsl(120, 100%, 50%);
   --hover-color: hsl(203, 90%, 8%);
-  --danger-color: blue;
+  --danger-color: red;
 }
 
 code {

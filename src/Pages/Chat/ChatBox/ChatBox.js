@@ -5,15 +5,17 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './Chatbox.module.css';
 import TextArea from '../../../components/Elements/TextArea/TextArea';
-import profile from '../../../images/profile.jfif';
+import DemoProfileImage from '../../../images/profile.jfif';
 import Dropdown from '../../../components/Dropdown/Dropdown';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
-import { useGetRecipient } from '../../../customHooks/useGetRecipient';
 import { useManageChat } from '../../../customHooks/useManageChat';
+import { useGetConversation } from './../../../customHooks/useGetConversation';
+import { useGetUser } from '../../../customHooks/useGetUser';
 
-const ChatBox = ({ recipient, user, conversationId }) => {
-  const { recipientProfile } = useGetRecipient(recipient);
-  const { text, setText, sendMessage, chat } = useManageChat(user.id, recipient, conversationId);
+const ChatBox = ({ userId, currentUser }) => {
+  const { user } = useGetUser(userId);
+  const { chatId, conversation } = useGetConversation(userId);
+  const { text, setText, sendMessage } = useManageChat(currentUser.id, userId, chatId);
   const [dropdown, setDropdown] = useState(false);
   const messagesRef = useRef();
   const submitRef = useRef();
@@ -21,8 +23,8 @@ const ChatBox = ({ recipient, user, conversationId }) => {
   const history = useHistory();
 
   useEffect(() => {
-    messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-  }, [chat]);
+    messagesRef.current.scrollTop = messagesRef.current?.scrollHeight;
+  }, [conversation]);
   useEffect(() => {
     const handleSendMessage = (e) => {
       if (e.key === 'Enter') {
@@ -33,7 +35,7 @@ const ChatBox = ({ recipient, user, conversationId }) => {
     return () => document.removeEventListener('keydown', (e) => handleSendMessage(e));
   }, []);
   const handleMenuClick = (e) => {
-    if (menu.current.contains(e.target)) {
+    if (menu.current?.contains(e.target)) {
       return;
     }
     setDropdown(false);
@@ -45,12 +47,12 @@ const ChatBox = ({ recipient, user, conversationId }) => {
 
   const handleDeleteChat = async () => {
     await database.users
-      .where('id', '==', user.id)
+      .where('id', '==', currentUser.id)
       .get()
       .then((snapshot) => {
         if (snapshot.docs[0]) {
           let user = snapshot.docs[0];
-          let updatedChats = user.data().chats.filter((chat) => chat.id !== recipient);
+          let updatedChats = user.data().chats.filter((chat) => chat.id !== userId);
           user.ref.update({
             chats: updatedChats,
           });
@@ -60,15 +62,60 @@ const ChatBox = ({ recipient, user, conversationId }) => {
         history.push('/home');
       });
   };
+  const displayMessage = () => {
+    let chats = [];
+    for (const [date, messages] of Object.entries(conversation)) {
+      chats.push(
+        <span key={date} className={styles.date}>
+          {date}
+        </span>
+      );
+      let allMessages = messages.map((message) => {
+        if (message.sender === currentUser.id) {
+          return (
+            <div
+              className={styles.senderMessage}
+              key={message.id}
+              style={{ marginLeft: 'auto', marginRight: '0.5rem' }}>
+              <span>{message.message.text}</span>
+              <span>
+                {new Date(message.createdAt.seconds * 1000).toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </span>
+            </div>
+          );
+        } else {
+          return (
+            <div
+              className={styles.receiverMessage}
+              key={message.id}
+              style={{ marginLeft: '0.5rem', marginRight: 'auto' }}>
+              <span>{message.message.text}</span>
+              <span>
+                {new Date(message.createdAt.seconds * 1000).toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </span>
+            </div>
+          );
+        }
+      });
+      chats.push(allMessages);
+    }
+    return chats;
+  };
 
   return (
     <div className={styles.chatBox}>
       <div className={styles.header}>
-        {recipientProfile && (
+        {user?.id && (
           <>
-            <div>
-              {<img src={recipientProfile?.photo || profile} alt='profile-pic' />}
-              <h3>{`${recipientProfile?.firstname} ${recipientProfile?.lastname}`}</h3>
+            <div className={styles.user}>
+              {<img src={user?.photo || DemoProfileImage} alt='profile-pic' />}
+              <h3>{`${user?.firstname} ${user?.lastname}`}</h3>
             </div>
             <div className={styles.dropdown} ref={menu}>
               <div onClick={() => setDropdown(true)}>
@@ -82,46 +129,14 @@ const ChatBox = ({ recipient, user, conversationId }) => {
         )}
       </div>
       <div ref={messagesRef} className={styles.messages}>
-        {chat.length > 0 &&
-          chat.map((message) => {
-            if (message.sender === user.id) {
-              return (
-                <div
-                  className={styles.senderMessage}
-                  key={message.id}
-                  style={{ marginLeft: 'auto', marginRight: '0.5rem' }}>
-                  <span>{message.message.text}</span>
-                  <span>
-                    {new Date(message.createdAt.seconds * 1000).toLocaleTimeString([], {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </span>
-                </div>
-              );
-            } else {
-              return (
-                <div
-                  className={styles.receiverMessage}
-                  key={message.id}
-                  style={{ marginLeft: '0.5rem', marginRight: 'auto' }}>
-                  <span>{message.message.text}</span>
-                  <span>
-                    {new Date(message.createdAt.seconds * 1000).toLocaleTimeString([], {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </span>
-                </div>
-              );
-            }
-          })}
+        {displayMessage()}
       </div>
-      <div className={styles.message}>
+      <div className={styles.textArea}>
         <TextArea
+          rows={1}
           value={text}
           type='text'
-          placeholder='Write your message here'
+          placeholder='Write your message here...'
           onChange={(e) => setText(e.target.value)}
         />
         <button ref={submitRef} type='button' onClick={sendMessage}>
@@ -130,7 +145,6 @@ const ChatBox = ({ recipient, user, conversationId }) => {
             style={{
               width: '50%',
               height: '50%',
-              fontSize: '1.5rem',
               color: 'white',
               cursor: 'pointer',
               zIndex: '1',

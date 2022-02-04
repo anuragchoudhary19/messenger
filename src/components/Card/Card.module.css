@@ -11,6 +11,7 @@
   padding: 0.5rem;
   background-color: transparent;
   border-bottom: 1px solid gray;
+  -webkit-tap-highlight-color: transparent;
 }
 @media (min-width: 769px) {
   .card:hover {
@@ -38,11 +39,13 @@
 .dropdown svg {
   color: var(--graylight);
 }
-.dropdown:hover {
-  background-color: var(--graylighter);
-}
-.dropdown:hover svg {
-  color: var(--gray50);
+@media (min-width: 769px) {
+  .dropdown:hover {
+    background-color: var(--graylighter);
+  }
+  .dropdown:hover svg {
+    color: var(--gray50);
+  }
 }
 .avatar {
   grid-area: avatar;

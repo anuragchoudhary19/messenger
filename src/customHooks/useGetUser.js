@@ -1,29 +1,33 @@
 import { useState, useEffect } from 'react';
 import { database } from '../firebase';
-
-export const useGetUser = (currentUser) => {
-  const [user, setUser] = useState(null);
+const initialState = {
+  id: '',
+  firstname: '',
+  lastname: '',
+  photo: '',
+};
+export const useGetUser = (id) => {
+  const [user, setUser] = useState(initialState);
   useEffect(() => {
-    const getUserProfile = (id) => {
-      database.users.doc(id).onSnapshot((doc) => {
-        if (doc.exists) {
-          let userDoc = doc.data();
-          setUser({
-            id: userDoc.id || '',
-            firstname: userDoc.firstname || '',
-            lastname: userDoc.lastname || '',
-            photo: userDoc.photo || '',
-            conversations: userDoc.conversations || [],
-          });
-        }
-      });
+    const getProfile = () => {
+      database.users
+        .doc(id)
+        .get()
+        .then((doc) => {
+          if (doc.data()) {
+            let userDoc = doc.data();
+            setUser({
+              ...user,
+              id: userDoc.id,
+              firstname: userDoc.firstname,
+              lastname: userDoc.lastname,
+              photo: userDoc.photo,
+            });
+          }
+        });
     };
-    if (currentUser?.id) {
-      getUserProfile(currentUser.id);
-    }
-    return () => {
-      setUser(null);
-    };
-  }, [currentUser]);
+    getProfile();
+    return () => getProfile;
+  }, [id, user]);
   return { user };
 };

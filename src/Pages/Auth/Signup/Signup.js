@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import { database } from '../../../firebase';
 import { useAuth } from '../../../AuthProvider';
 //
@@ -21,7 +22,7 @@ const Signup = () => {
   useEffect(() => {
     let isMounted = true;
     if (isMounted && currentUser) {
-      history.push('/dashboard');
+      history.push('/home');
     }
     return () => {
       isMounted = false;
@@ -64,6 +65,7 @@ const Signup = () => {
             email: res.user.email,
             firstname: firstname.trim(),
             lastname: lastname.trim(),
+            chats: [],
           });
         }
       })

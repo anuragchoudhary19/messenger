@@ -37,3 +37,8 @@
 .menu *:hover {
   background-color: var(--card-hover-color);
 }
+@media (max-width: 768px) {
+  .dropdown {
+    display: none;
+  }
+}

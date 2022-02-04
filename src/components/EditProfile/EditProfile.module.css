@@ -1,8 +1,8 @@
 .modal {
   display: flex;
   flex-direction: column;
-  background-color: var(--background-2);
-  color: var(--text-primary);
+  background-color: var(--gray0);
+  color: var(--white);
   width: 40%;
   max-width: 540px;
   height: fit-content;

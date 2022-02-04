@@ -59,7 +59,7 @@ const SearchUsers = ({ closeModal }) => {
   return (
     <div className={styles.modal}>
       <header>
-        <h2>Connect</h2>
+        <h2>Find Friends</h2>
         <FontAwesomeIcon
           icon={faTimes}
           style={{ marginLeft: 'auto', marginRight: '10px', fontSize: '1.5rem', cursor: 'pointer' }}

@@ -1,17 +1,19 @@
 .textarea {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
   height: fit-content;
-  max-height: 100%;
-  margin-bottom: 1rem;
+  border-radius: 1.5rem;
+  background-color: var(--gray0);
+  padding: 0.25rem;
 }
 .textarea textarea {
-  min-height: fit-content;
-  height: 100%;
-  width: 100%;
-  padding: 0.25rem;
-  color: var(--text-primary);
+  height: fit-content;
+  width: 95%;
+  padding: 0.125rem;
+  color: var(--white);
   background-color: transparent;
   resize: none;
   font-size: 1.2rem;
@@ -24,5 +26,5 @@
   display: none;
 }
 .textarea textarea::placeholder {
-  color: var(--text-primary);
+  color: var(--white);
 }

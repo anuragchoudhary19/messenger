@@ -67,6 +67,7 @@ const Login = () => {
       setLoading(true);
       await login(email, password);
     } catch (e) {
+      console.log(e);
       if (e.code === 'auth/user-not-found') {
         setError('User not found');
       }

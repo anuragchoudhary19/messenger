@@ -1,28 +1,25 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../AuthProvider';
+//
 import Sidebar from '../../components/Sidebar/Sidebar';
-import styles from './Chat.module.css';
 import ChatBox from './ChatBox/ChatBox';
 import Navbar from '../../components/Navbar/Navbar';
-import { useGetConversationId } from './../../customHooks/useGetConversationId';
+//
+import styles from './Chat.module.css';
 
 const Chat = () => {
-  const { currentUser, user } = useAuth();
-  const { id } = useParams();
-  const { conversationId } = useGetConversationId(currentUser.id, id);
+  const { currentUser } = useAuth();
+  const { userId } = useParams();
+
   return (
-    <div className={styles.home}>
-      <header>
-        <Navbar user={user} />
-        <Sidebar user={user} />
-      </header>
+    <div className={styles.chat}>
+      <div className={styles.chats}>
+        <Navbar />
+        <Sidebar />
+      </div>
       <div className={styles.main}>
-        {id && conversationId ? (
-          <ChatBox user={currentUser} recipient={id} conversationId={conversationId} />
-        ) : (
-          <div className={styles.logo}>Messenger</div>
-        )}
+        <ChatBox currentUser={currentUser} userId={userId} />
       </div>
     </div>
   );

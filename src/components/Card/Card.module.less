@@ -16,6 +16,7 @@
       background-color: var(--card-hover-color);
     }
   }
+  -webkit-tap-highlight-color: transparent;
 }
 .link {
   grid-area: chat;
@@ -37,11 +38,13 @@
   svg {
     color: var(--graylight);
   }
-  &:hover {
-    background-color: var(--graylighter);
-  }
-  &:hover svg {
-    color: var(--gray50);
+  @media (min-width: 769px) {
+    &:hover {
+      background-color: var(--graylighter);
+    }
+    &:hover svg {
+      color: var(--gray50);
+    }
   }
 }
 

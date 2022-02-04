@@ -16,8 +16,6 @@ export const firestore = app.firestore();
 export const database = {
   users: firestore.collection('users'),
   chats: firestore.collection('chats'),
-  getCurrentTimestamp: firebase.firestore.FieldValue.serverTimestamp,
-  getFieldValue: firebase.firestore,
 };
 export const auth = app.auth();
 export const storage = app.storage();

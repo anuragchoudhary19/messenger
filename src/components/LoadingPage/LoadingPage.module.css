@@ -3,7 +3,9 @@
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  background-color: var(--background-color);
+  background-color: var(--gray0);
+  width: 100%;
+  height: 100vh;
 }
 .spinner {
   position: relative;
@@ -20,7 +22,7 @@
   width: 100%;
   height: 100%;
   border: 2px solid transparent;
-  border-top: 2px solid var(--primary-color);
+  border-top: 2px solid var(--white);
   animation: rotate 1s infinite linear;
 }
 @keyframes rotate {

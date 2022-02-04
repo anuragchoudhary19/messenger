@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useGetUser } from './customHooks/useGetUser';
+import { useGetMyProfile } from './customHooks/useGetMyProfile';
 import { auth } from './firebase';
 
 const AuthContext = React.createContext();
@@ -11,7 +11,7 @@ export const useAuth = () => {
 const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { user } = useGetUser(currentUser);
+  const { user } = useGetMyProfile(currentUser?.id);
   const signup = async (email, password) => {
     return await auth.createUserWithEmailAndPassword(email, password);
   };
@@ -23,9 +23,9 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    let isMounted = true;
     const unsubscribe = () =>
       auth.onAuthStateChanged((user) => {
+        setLoading(true);
         if (user) {
           setCurrentUser({ id: user.uid, email: user.email });
         } else {
@@ -33,15 +33,13 @@ const AuthProvider = ({ children }) => {
         }
         setLoading(false);
       });
-    if (isMounted) {
-      unsubscribe();
-    }
+    unsubscribe();
     return () => {
       unsubscribe();
-      isMounted = false;
       setCurrentUser(null);
     };
   }, []);
+
   const value = { currentUser, user, signup, login, logout };
 
   return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
