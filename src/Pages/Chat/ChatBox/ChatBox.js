@@ -11,12 +11,16 @@ import { useManageChat } from '../../../customHooks/useManageChat';
 import { useGetConversation } from './../../../customHooks/useGetConversation';
 import { useGetUser } from '../../../customHooks/useGetUser';
 import { useDeleteChat } from '../../../customHooks/useDeleteChat';
+import { useSocket } from '../../../SocketProvider';
+import { useIsTyping } from '../../../customHooks/useIsTyping';
 
 const ChatBox = ({ userId, currentUser }) => {
+  const socket = useSocket();
   const { user } = useGetUser(userId);
   const { chatId, conversation } = useGetConversation(userId);
   const { text, setText, sendMessage } = useManageChat(currentUser.id, userId, chatId);
-  const { deleteChat } = useDeleteChat(chatId, userId);
+  const { deleteChat } = useDeleteChat(chatId, userId, text);
+  const { isRecieverTyping } = useIsTyping(userId, currentUser.id, text);
   const [dropdown, setDropdown] = useState(false);
   const messagesRef = useRef();
   const submitRef = useRef();
@@ -102,7 +106,10 @@ const ChatBox = ({ userId, currentUser }) => {
                 <FontAwesomeIcon icon={faArrowLeft} />
               </div>
               {<img src={user?.photo || DemoProfileImage} alt='profile-pic' />}
-              <h3>{`${user?.firstname} ${user?.lastname}`}</h3>
+              <div className={styles.name}>
+                <h3>{`${user?.firstname} ${user?.lastname}`}</h3>
+                <span>{isRecieverTyping ? 'typing...' : ''}</span>
+              </div>
             </div>
             <div className={styles.dropdown} ref={menu}>
               <div onClick={() => setDropdown(true)}>

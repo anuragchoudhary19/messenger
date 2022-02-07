@@ -13,6 +13,7 @@ import { useGetOnlineStatus } from '../../customHooks/useGetOnlineStatus';
 const Navbar = () => {
   const { logout, user } = useAuth();
   const isOnline = useGetOnlineStatus(user.id);
+  console.log(isOnline);
   const socket = useSocket();
   const [editProfile, setEditProfile] = useState(false);
   const [searcUsers, setSearcUsers] = useState(false);
