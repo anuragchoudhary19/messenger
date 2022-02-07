@@ -11,11 +11,9 @@ import { useManageChat } from '../../../customHooks/useManageChat';
 import { useGetConversation } from './../../../customHooks/useGetConversation';
 import { useGetUser } from '../../../customHooks/useGetUser';
 import { useDeleteChat } from '../../../customHooks/useDeleteChat';
-import { useSocket } from '../../../SocketProvider';
 import { useIsTyping } from '../../../customHooks/useIsTyping';
 
 const ChatBox = ({ userId, currentUser }) => {
-  const socket = useSocket();
   const { user } = useGetUser(userId);
   const { chatId, conversation } = useGetConversation(userId);
   const { text, setText, sendMessage } = useManageChat(currentUser.id, userId, chatId);

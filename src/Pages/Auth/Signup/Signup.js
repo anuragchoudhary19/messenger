@@ -49,7 +49,7 @@ const Signup = () => {
     return false;
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     let formHasError = checkForm();
     if (formHasError) {
@@ -57,7 +57,7 @@ const Signup = () => {
     }
     setError('');
     setLoading(true);
-    signup(email, password)
+    await signup(email, password)
       .then(async (res) => {
         if (res) {
           await database.users.doc(res.user.uid).set({

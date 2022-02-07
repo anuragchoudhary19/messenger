@@ -14,6 +14,7 @@ export const useManageChat = (myId, userId, chatId) => {
     return latestMessageDate;
   };
   const sendMessage = async () => {
+    if (text.trim() === '') return;
     await database.chats
       .doc(chatId)
       .get()
