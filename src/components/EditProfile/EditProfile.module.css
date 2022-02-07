@@ -3,7 +3,7 @@
   flex-direction: column;
   background-color: var(--gray0);
   color: var(--white);
-  width: 40%;
+  width: 60%;
   max-width: 540px;
   height: fit-content;
   overflow-y: auto;
@@ -103,4 +103,12 @@
   width: fit-content;
   background-color: var(--danger-color);
   padding: 4px 8px;
+}
+@media (max-width: 768px) {
+  .form > div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
 }

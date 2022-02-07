@@ -1,21 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { database } from '../../../firebase';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './Chatbox.module.css';
 import TextArea from '../../../components/Elements/TextArea/TextArea';
 import DemoProfileImage from '../../../images/profile.jfif';
 import Dropdown from '../../../components/Dropdown/Dropdown';
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisH, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useManageChat } from '../../../customHooks/useManageChat';
 import { useGetConversation } from './../../../customHooks/useGetConversation';
 import { useGetUser } from '../../../customHooks/useGetUser';
+import { useDeleteChat } from '../../../customHooks/useDeleteChat';
 
 const ChatBox = ({ userId, currentUser }) => {
   const { user } = useGetUser(userId);
   const { chatId, conversation } = useGetConversation(userId);
   const { text, setText, sendMessage } = useManageChat(currentUser.id, userId, chatId);
+  const { deleteChat } = useDeleteChat(chatId, userId);
   const [dropdown, setDropdown] = useState(false);
   const messagesRef = useRef();
   const submitRef = useRef();
@@ -45,24 +46,7 @@ const ChatBox = ({ userId, currentUser }) => {
     return () => document.removeEventListener('mousedown', handleMenuClick);
   }, []);
 
-  const handleDeleteChat = async () => {
-    await database.users
-      .where('id', '==', currentUser.id)
-      .get()
-      .then((snapshot) => {
-        if (snapshot.docs[0]) {
-          let user = snapshot.docs[0];
-          let updatedChats = user.data().chats.filter((chat) => chat.id !== userId);
-          user.ref.update({
-            chats: updatedChats,
-          });
-        }
-      })
-      .then(() => {
-        history.push('/home');
-      });
-  };
-  const displayMessage = () => {
+  const displayMessage = (conversation) => {
     let chats = [];
     for (const [date, messages] of Object.entries(conversation)) {
       chats.push(
@@ -114,6 +98,9 @@ const ChatBox = ({ userId, currentUser }) => {
         {user?.id && (
           <>
             <div className={styles.user}>
+              <div className={styles.back} onClick={() => history.push('/home')}>
+                <FontAwesomeIcon icon={faArrowLeft} />
+              </div>
               {<img src={user?.photo || DemoProfileImage} alt='profile-pic' />}
               <h3>{`${user?.firstname} ${user?.lastname}`}</h3>
             </div>
@@ -122,14 +109,14 @@ const ChatBox = ({ userId, currentUser }) => {
                 <FontAwesomeIcon icon={faEllipsisH} />
               </div>
               <Dropdown open={dropdown}>
-                <div onClick={handleDeleteChat}>Delete</div>
+                <div onClick={deleteChat}>Delete</div>
               </Dropdown>
             </div>
           </>
         )}
       </div>
       <div ref={messagesRef} className={styles.messages}>
-        {displayMessage()}
+        {displayMessage(conversation)}
       </div>
       <div className={styles.textArea}>
         <TextArea
@@ -139,12 +126,10 @@ const ChatBox = ({ userId, currentUser }) => {
           placeholder='Write your message here...'
           onChange={(e) => setText(e.target.value)}
         />
-        <button ref={submitRef} type='button' onClick={sendMessage}>
+        <button ref={submitRef} type='button' onClick={() => sendMessage()}>
           <FontAwesomeIcon
             icon={faPaperPlane}
             style={{
-              width: '50%',
-              height: '50%',
               color: 'white',
               cursor: 'pointer',
               zIndex: '1',

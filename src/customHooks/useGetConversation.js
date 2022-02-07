@@ -27,9 +27,15 @@ export const useGetConversation = (userId) => {
         }
       }
       setChatId(uuidv4());
+      setConversation([]);
     } else {
       setChatId(uuidv4());
+      setConversation([]);
     }
-  }, [chats, userId]);
+    return () => {
+      setConversation([]);
+      setChatId('');
+    };
+  }, [userId, chats]);
   return { chatId, conversation };
 };

@@ -121,8 +121,8 @@ const EditProfile = ({ closeModal }) => {
             onChange={inputChangeHandle('email')}
           />
           <div style={{ marginLeft: 'auto', marginRight: '0.5rem', width: '40%' }}>
-            <Button btnStyle='primaryOutline' btnSize='md' loading={updating} onClick={updateProfileHandle}>
-              Save
+            <Button width='100%' btnStyle='primarySolid' btnSize='md' loading={updating} onClick={updateProfileHandle}>
+              Update
             </Button>
           </div>
         </div>

@@ -15,7 +15,7 @@
   height: 5rem;
   width: 100%;
   background-color: transparent;
-  padding: 0.5rem;
+  padding: 0.25rem;
   border-left: 1px solid grey;
   background-color: var(--gray0);
 }
@@ -24,32 +24,43 @@
   flex-direction: row;
   align-items: center;
   width: fit-content;
+  height: 100%;
   color: var(--white);
 }
 .header img {
   height: 3rem;
   aspect-ratio: 1;
   border-radius: 50%;
-  margin: 0 0.5rem;
+  margin: 0 0.25rem;
 }
-.dropdown {
+.menu {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+}
+.dropdown,
+.back {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 1.5rem;
+  font-size: 1rem;
   aspect-ratio: 1;
   border-radius: 0.25rem;
-  margin: 0 0.5rem;
+  margin: 0.25rem;
   cursor: pointer;
 }
-.dropdown svg {
+.dropdown svg,
+.back svg {
   color: var(--graylight);
 }
-.dropdown:hover {
+.dropdown:hover,
+.back:hover {
   background-color: var(--graylighter);
 }
-.dropdown:hover svg {
+.dropdown:hover svg,
+.back:hover svg {
   color: var(--gray50);
 }
 .messages {
@@ -117,22 +128,22 @@
   width: 100%;
   height: fit-content;
   min-height: 3rem;
-  padding-left: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-top: 0.5rem;
+  padding: 0.5rem;
   background-color: transparent;
 }
 .textArea button {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: auto;
   border: none;
   outline: none;
   width: 3rem;
   height: 3rem;
+  font-size: 1.5rem;
   border-radius: 50%;
   border-left: 1px solid grey;
-  background-color: var(--green40);
+  background-color: var(--green30);
 }
 .date {
   margin-right: 50%;
@@ -145,4 +156,9 @@
   margin-top: 0.5rem;
   border-radius: 4px;
   font-weight: 500;
+}
+@media (min-width: 768px) {
+  .back {
+    display: none;
+  }
 }

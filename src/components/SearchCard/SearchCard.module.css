@@ -4,20 +4,20 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0.5rem;
   background-color: transparent;
   cursor: pointer;
 }
 @media (max-width: 768px) {
   .card {
-    width: 45%;
+    width: 50%;
     height: auto;
   }
 }
 @media (min-width: 769px) {
   .card {
-    width: 30%;
+    width: 33%;
     height: auto;
-    margin: 0.5rem;
   }
 }
 .user {

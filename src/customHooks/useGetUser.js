@@ -1,13 +1,8 @@
 import { useState, useEffect } from 'react';
 import { database } from '../firebase';
-const initialState = {
-  id: '',
-  firstname: '',
-  lastname: '',
-  photo: '',
-};
+
 export const useGetUser = (id) => {
-  const [user, setUser] = useState(initialState);
+  const [user, setUser] = useState({});
   useEffect(() => {
     const getProfile = () => {
       database.users
@@ -17,7 +12,6 @@ export const useGetUser = (id) => {
           if (doc.data()) {
             let userDoc = doc.data();
             setUser({
-              ...user,
               id: userDoc.id,
               firstname: userDoc.firstname,
               lastname: userDoc.lastname,
@@ -27,7 +21,9 @@ export const useGetUser = (id) => {
         });
     };
     getProfile();
-    return () => getProfile;
-  }, [id, user]);
+    return () => {
+      setUser({});
+    };
+  }, [id]);
   return { user };
 };

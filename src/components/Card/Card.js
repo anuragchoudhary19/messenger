@@ -29,7 +29,6 @@ const Card = (props) => {
   const dropdown = useRef();
   const card = useRef();
   const popupNode = useRef();
-  console.log(chatId);
   useEffect(() => {
     let regex = new RegExp('^' + query, 'g', 'i');
     if (regex.test(firstname) || regex.test(lastname)) {

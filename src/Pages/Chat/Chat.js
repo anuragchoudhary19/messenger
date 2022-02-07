@@ -11,7 +11,6 @@ import styles from './Chat.module.css';
 const Chat = () => {
   const { currentUser } = useAuth();
   const { userId } = useParams();
-
   return (
     <div className={styles.chat}>
       <div className={styles.chats}>

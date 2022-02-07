@@ -72,9 +72,7 @@ const SearchUsers = ({ closeModal }) => {
       <div className={styles.result}>
         <div className={styles.users}>
           {searchedUsers.length > 0 &&
-            searchedUsers.map((user) => (
-              <SearchCard close={closeModal} user={user} room={{ _id: user._id }} key={user.id} />
-            ))}
+            searchedUsers.map((user) => <SearchCard close={closeModal} user={user} key={user.id} />)}
         </div>
       </div>
     </div>

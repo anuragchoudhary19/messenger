@@ -17,7 +17,7 @@ export const SocketProvider = ({ children }) => {
       socketConnection = io(process.env.REACT_APP_API_SOCKET_IO_URL, {
         transports: ['websocket', 'polling', 'flashsocket'],
         credentials: true,
-        query: { id: user.id },
+        query: { id: user?.id },
       });
       setSocket(socketConnection);
     }
