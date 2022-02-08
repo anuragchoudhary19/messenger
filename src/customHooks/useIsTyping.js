@@ -15,6 +15,8 @@ export const useIsTyping = (recieverId, senderId, text) => {
     socket.on('typing', (sender, reciever) => {
       if (sender === recieverId && reciever === senderId) {
         setIsRecieverTyping(true);
+      } else {
+        setIsRecieverTyping(false);
       }
     });
     socket.on('notTyping', (sender, reciever) => {
@@ -22,6 +24,9 @@ export const useIsTyping = (recieverId, senderId, text) => {
         setIsRecieverTyping(false);
       }
     });
+    return () => {
+      setIsRecieverTyping(false);
+    };
   }, [socket, text, senderId, recieverId]);
   return { isRecieverTyping };
 };

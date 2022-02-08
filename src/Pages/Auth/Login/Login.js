@@ -7,8 +7,8 @@ import Input from '../../../components/Elements/Input/Input';
 //
 import styles from './Login.module.css';
 
-const initialState = { email: '', password: '' };
 const Login = () => {
+  const initialState = { email: '', password: '' };
   const demoEmail = 'anuragdemoemail@gmail.com';
   const demoPassword = 'password123';
   const [form, setForm] = useState(initialState);
@@ -22,7 +22,7 @@ const Login = () => {
   const { login, currentUser } = useAuth();
   useEffect(() => {
     let isMounted = true;
-    if (isMounted && currentUser) {
+    if (currentUser && isMounted) {
       history.push('/home');
     }
     return () => {
@@ -66,6 +66,7 @@ const Login = () => {
       setError('');
       setLoading(true);
       await login(email, password);
+      setLoading(false);
     } catch (e) {
       console.log(e);
       if (e.code === 'auth/user-not-found') {

@@ -12,8 +12,9 @@ export const SocketProvider = ({ children }) => {
   const { user } = useAuth();
   const [socket, setSocket] = useState(null);
   useEffect(() => {
+    let isMounted = true;
     let socketConnection;
-    if (user?.id !== '') {
+    if (user?.id !== '' && isMounted) {
       socketConnection = io(process.env.REACT_APP_API_SOCKET_IO_URL, {
         transports: ['websocket', 'polling', 'flashsocket'],
         credentials: true,
@@ -22,6 +23,7 @@ export const SocketProvider = ({ children }) => {
       setSocket(socketConnection);
     }
     return () => {
+      isMounted = false;
       setSocket(null);
     };
   }, [user?.id]);
