@@ -19,7 +19,7 @@ body {
   --gray0: #2c2e43;
   --gray50: #161722;
   --graylight: #ababb4;
-  --graylighter: hsla(240, 5%, 84%, 0.5);
+  --graylighter: hsla(240, 5%, 84%, 0.7);
   --white: hsl(0, 0%, 95%);
   --btn-primary: #26645a;
   --btn-outline: #26645a;

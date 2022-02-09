@@ -5,20 +5,17 @@ export const useGetUser = (id) => {
   const [user, setUser] = useState({});
   useEffect(() => {
     const getProfile = () => {
-      database.users
-        .doc(id)
-        .get()
-        .then((doc) => {
-          if (doc.data()) {
-            let userDoc = doc.data();
-            setUser({
-              id: userDoc.id,
-              firstname: userDoc.firstname,
-              lastname: userDoc.lastname,
-              photo: userDoc.photo,
-            });
-          }
-        });
+      database.users.doc(id).onSnapshot((doc) => {
+        if (doc.data()) {
+          let userDoc = doc.data();
+          setUser({
+            id: userDoc.id,
+            firstname: userDoc.firstname,
+            lastname: userDoc.lastname,
+            photo: userDoc.photo,
+          });
+        }
+      });
     };
     getProfile();
     return () => {

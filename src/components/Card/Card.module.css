@@ -2,13 +2,13 @@
   display: grid;
   grid-template-areas: 'chat dropdown';
   grid-template-rows: auto;
-  grid-template-columns: 1fr auto;
-  justify-content: center;
-  align-items: flex-start;
+  grid-template-columns: 90% 10%;
+  justify-content: space-between;
+  align-items: center;
   cursor: pointer;
   width: 100%;
-  height: fit-content;
-  padding: 0.5rem;
+  height: 64px;
+  padding: 0.25rem;
   background-color: transparent;
   border-bottom: 1px solid gray;
   -webkit-tap-highlight-color: transparent;
@@ -22,8 +22,13 @@
   grid-area: chat;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
   color: var(--white);
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
 }
 .dropdown {
   grid-area: dropdown;
@@ -31,42 +36,45 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
   cursor: pointer;
 }
-.dropdown svg {
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem;
+  border-radius: 30%;
+}
+.icon svg {
   color: var(--graylight);
 }
 @media (min-width: 769px) {
-  .dropdown:hover {
+  .icon:hover {
     background-color: var(--graylighter);
   }
-  .dropdown:hover svg {
+  .icon:hover svg {
     color: var(--gray50);
   }
 }
 .avatar {
   grid-area: avatar;
-  display: flex;
-  width: 4rem;
+  height: calc(64px - 1rem);
   aspect-ratio: 1;
-  border-radius: 50%;
 }
 .avatar img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
 }
-.header {
+.meta {
   grid-area: user;
-  display: grid;
-  grid-template-areas: 'name name' 'message message';
-  grid-template-columns: auto auto;
-  grid-template-rows: auto auto;
+  display: flex;
+  flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   height: fit-content;
   width: 100%;
   color: var(--white);
@@ -74,45 +82,52 @@
   background-color: transparent;
 }
 .name {
-  grid-area: name;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   font-weight: 600;
   font-size: 1.1rem;
   white-space: nowrap;
-  width: auto;
+  width: fit-content;
   height: auto;
 }
 .name > span {
   margin-right: 0.5rem;
 }
 .lastMessage {
-  grid-area: message;
-  display: flex;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 80% 20%;
+  justify-content: space-between;
   align-items: center;
   font-weight: 600;
   font-size: 1.1rem;
   white-space: nowrap;
-  width: auto;
+  width: 100%;
   height: auto;
+  overflow: hidden;
 }
 .lastMessage > span {
   margin-right: 0.5rem;
 }
 .date {
+  text-align: center;
+  width: 100%;
   font-weight: 700;
   font-size: 0.8rem;
   color: hsla(0, 0%, 80%, 0.6);
   padding: 0.25rem;
+  background-color: transparent;
 }
 .message {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   text-align: left;
   font-weight: 300;
   color: var(--graylight);
   font-size: 1rem;
   padding: 0.25rem;
+  background-color: transparent;
 }
 .online {
   background-color: var(--green0);

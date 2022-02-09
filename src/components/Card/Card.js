@@ -72,7 +72,7 @@ const Card = (props) => {
           <div className={styles.avatar}>
             <img src={photo || ProfileImage} alt='profile' />
           </div>
-          <div className={styles.header}>
+          <div className={styles.meta}>
             <div className={styles.name}>
               {firstname && <span>{firstname}</span>}
               {lastname && <span>{lastname}</span>}
@@ -87,7 +87,7 @@ const Card = (props) => {
           </div>
         </Link>
         <div className={styles.dropdown} ref={dropdown} onClick={() => setOpenDropdown(true)}>
-          <div>
+          <div className={styles.icon}>
             <FontAwesomeIcon icon={faEllipsisH} />
           </div>
           <Dropdown open={openDropdown}>
